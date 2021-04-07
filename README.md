@@ -1,4 +1,4 @@
-# Moderne Webentwicklung mit React
+# Moderne Webentwicklung
 
 ## Beschreibung:
 
