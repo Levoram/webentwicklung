@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "http-server": "^0.12.3"
+  },
+  "name": "react-mit-cdn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "http-server .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nico Küchler<mail@nico-kuechler.de>",
+  "license": "ISC",
+  "description": "react with CDN Example"
+}

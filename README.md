@@ -355,7 +355,7 @@ yarn-error.log*
 
 Eine package-lock.json oder eine yarn.lock datei gehören hier allerdings nicht auf die Liste. Diese Dateien stellen sicher das die korrekten Abhängikeiten bei einer Installation bezogen werden.
 
-# Webbrowser, NODE.js, NPM und Yarn
+# Webbrowser, NODE.js
 
 Jedes mir derzeit bekannte Javascript und Typescript Framework benötigt auf dem Entwicklungsrechner eine Installation von Node.js.
 
@@ -529,11 +529,77 @@ Im geöffneten Terminalfenster einfach den folgenden Befehl eingeben und node st
 
 `node Beispiele/helloworldserver.js`
 
-Mit dieser Mehtode lässt sich relativ schnell eine kleine lokale REST API für die Frontend-Entwicklung erstellen.  
-Gerade für diesen Anwendungsfall gibt es im Node.js Ökosystem eine vielzahl an hilfreichen Bibliotheken von denen ich hier nur meine drei Favoriten vorstellen möchte.
+Mit dieser Methode lässt sich relativ schnell eine kleine lokale REST API für die Frontend-Entwicklung erstellen.  
+Gerade für diesen Anwendungsfall gibt es im Node.js Ökosystem eine vielzahl an hilfreichen Bibliotheken von denen ich hier nur meine Favoriten nennen möchte.
 
 - [express](http://expressjs.com/)
-- [http-server](https://www.npmjs.com/package/http-server)
 - [json-server](https://www.npmjs.com/package/json-server)
+
+# Lokaler Webserver für die Entwicklung
+
+Für die meisten Arbeitenen in der Webentwicklung wird eine lokalen Webserver benötigt. Einige Features von modernen Browsern erfordern es, dass ein HTML-Dokument oder auch andere Dateitypen von einem Webserver und nicht von der lokalen Festplatte eingelesen werden. Es gibt viele Projekte die sich mit diesem Problem befassen und eines der bekanntesten möchte ich hier kurz Vorstellen.
+
+[http-server](https://www.npmjs.com/package/http-server) ist einer der leichtgewichtigsten Webserver und steht praktischerweise als NPM-Paket zur Verfügung. Dieser Server läst sich sowohl global, lokal wie auch On-Demand installieren und verwenden.
+
+## Lokale Installation
+
+Für eine lokale Installation wird im Projektordner eine Konsole geöffnet und die folgenden zwei Befehle nacheinander ausgeführt:
+
+```
+npm init -y
+npm install http-server
+```
+
+Das erste Kommando initialisiert ein neues Projekt und legt eine package.json-Datei im aktuellen Verzeichnis an.  
+Der zweite Befehl installiert das npm-Packet http-server im aktuellen Verzeichnis im Unterordner node_modules.
+Sind beide Befehle erfolgreich, kann im Anschluss mit dem Befehl `node_modules/.bin/http-server .` einen Webserver gestartet werden, der den Inhalt des aktuellen Verzeichnisses auf allen verfügbaren Netzwerkschnittstellen bereitstellt.
+
+## Sagen wir der Welt Hallo
+
+Da wir nun wissen, wie wir einen Webserver lokal betreiben können, folgt nun ein kurzes Beispiel wie wir Ihn nutzen können, um eine kleine React Anwendung lokal zu entwickeln ohne React selbst installieren zu müssen.
+
+Hierzu wechseln wir mit der IDE unserer Wahl in das Unterverzeichniss ./Beispiele/react-mit-cdn und betrachten dieses Verzeichnis für den Moment als unseren basis Projekt Ordner. Wir initialisieren ein neues npm Projekt und installieren den http-server lokal wie oben beschrieben.
+
+Im nächsten Schritt erstellen wir im Ordner eine index.html Datei und füllen sie mit folgendem Inhalt:
+
+```
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hallo Welt</title>
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/babel-standalone@6/babel.min.js"
+      crossorigin
+    ></script>
+    <script src="index.js" type="text/babel"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+```
+
+(Beispiele/react-mit-cdn/index.html)
+
+Diese Datei ist der spätere Einstiegspunkt unseres kleinen Beispiels. Um eine Webanwendung mit React programieren zu können, benötigen wir mindestens die folgenden zwei Bibliotheken react und react-dom. Da wir React nicht lokal im Projekt installiert haben, müssen wir diese Bibliotheken irgendwie anders bekommen. Das tun wir daher über das Internet mittels eines sogenannten Content Delivery Networks kurz CDN. Die obersten beiden script Tags binden die beiden benötigten Pakete über das bekannte CDN unpkg.com ein. Damit wir wie gewohnt jsx schreiben können laden wir mit dem dritten Script Tag nun ebenfalls Babel herunter. Nach diesem Setup könne wir nun unsere eigene index.js Datei einbinden die unseren ersten React Anwendungscode enthält. Wichtig ist bei diesem script tag die Angabe des type="text/babel". Dieses Tag veranlasst Babel zur Laufzeit dazu unseren Source Code zu transpiliern ( übersetzen ), damit der Browser unser Programm überhaupt versteht.
+
+```
+const Hallo = ({ name }) => <h1>Hallo, {name}!</h1>;
+
+ReactDOM.render(<Hallo name="Welt" />, document.getElementById("root"));
+```
+
+(Beispiele/react-mit-cdn/index.js)
 
 Author: Nico Küchler
