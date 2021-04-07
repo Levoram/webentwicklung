@@ -592,7 +592,8 @@ Im nächsten Schritt erstellen wir im Ordner eine index.html Datei und füllen s
 
 (Beispiele/react-mit-cdn/index.html)
 
-Diese Datei ist der spätere Einstiegspunkt unseres kleinen Beispiels. Um eine Webanwendung mit React programieren zu können, benötigen wir mindestens die folgenden zwei Bibliotheken react und react-dom. Da wir React nicht lokal im Projekt installiert haben, müssen wir diese Bibliotheken irgendwie anders bekommen. Das tun wir daher über das Internet mittels eines sogenannten Content Delivery Networks kurz CDN. Die obersten beiden script Tags binden die beiden benötigten Pakete über das bekannte CDN unpkg.com ein. Damit wir wie gewohnt jsx schreiben können laden wir mit dem dritten Script Tag nun ebenfalls Babel herunter. Nach diesem Setup könne wir nun unsere eigene index.js Datei einbinden die unseren ersten React Anwendungscode enthält. Wichtig ist bei diesem script tag die Angabe des type="text/babel". Dieses Tag veranlasst Babel zur Laufzeit dazu unseren Source Code zu transpiliern ( übersetzen ), damit der Browser unser Programm überhaupt versteht.
+Diese Datei ist der spätere Einstiegspunkt unserer ersten Anwendung. Um eine Webanwendung mit React programieren zu können, benötigen wir mindestens die folgenden zwei Bibliotheken react und react-dom.  
+Da wir React nicht lokal im Projekt installiert haben, müssen wir diese beiden Bibliotheken irgendwo anders her bekommen. Das tun wir über ein sogenanntes Content Delivery Networks kurz CDN. Die obersten Beiden script Tags binden in userem Beispiel die notwendigen Pakete über das bekannte CDN unpkg.com ein. Damit wir wie gewohnt jsx schreiben können laden wir mit dem dritten Script Tag nun ebenfalls [Babel](https://babeljs.io/) herunter. Nach diesem Setup könne wir nun unsere eigene index.js Datei einbinden, die unseren ersten React Anwendungscode enthält. Wichtig ist bei diesem letzten script tag die Angabe des `type="text/babel"`. Dieses Tag veranlasst Babel zur Laufzeit dazu unseren Source Code zu transpilieren ( übersetzen ), damit der Browser unser Programm überhaupt versteht.
 
 ```
 const Hallo = ({ name }) => <h1>Hallo, {name}!</h1>;
@@ -601,5 +602,218 @@ ReactDOM.render(<Hallo name="Welt" />, document.getElementById("root"));
 ```
 
 (Beispiele/react-mit-cdn/index.js)
+
+Nachdem alles an seinem Platz ist müssen wir jetzt lediglich http-server dazu benutzen unser Programm zu hosten. Wir können dies mit dem bereits bekannten Befehl `node_modules/.bin/http-serer .` erreichen, oder wir modifizieren die neu erstellte package.json Datei indem wir in der scripts section ein neues `"start":"http.server .",` Script hinzufügen.
+
+```
+ {
+  "dependencies": {
+    "http-server": "^0.12.3"
+  },
+  "name": "react-mit-cdn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "http-server .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nico Küchler",
+  "license": "ISC",
+  "description": "react with CDN Example"
+}
+```
+
+Durch das hinzugefügte Script können wir jetzt ebenfalls den Befehl `npm start` im Terminal verwenden und unsere Anwendung wird gestartet. Im Terminal sollte die folgende Ausgabe erscheinen.
+
+```
+$ npm start
+
+> react-mit-cdn@1.0.0 start
+> http-server .
+
+Starting up http-server, serving .
+Available on:
+  http://192.168.178.20:8080
+  http://127.0.0.1:8080
+  http://172.25.144.1:8080
+Hit CTRL-C to stop the server
+```
+
+Wir können uns das Ergebnis unter einer der angegebenen Links ansehen oder den Server wie angegeben mit STRG-C stoppen.  
+<br/>
+
+# Die Welt der Frameworks und Bibliotheken
+
+Bevor man mit der Entwicklung einer Webanwendung oder Webseite beginnt, muss man sich der Frage stelle, welche Bibliothek oder welches Framework man für seine Anwendung benutzen möchte. Hiervon hängt einiges Ab, da man mit dieser Entscheidung oft Jahrelang leben muss. Gerade in der Webentwicklung sind die möglichkeiten schier überwältigend. Gibt man einen Begriff wie bestes Javascript Framework 2021 in die Suchleiste ein, bekommt man Titel wie "10 Best JavaScript Frameworks to Use in 2021" oder ähnliche zu hauf. Das Internet erschlägt einen Quasi mit Antworten und nächste Woche ist die Antwort eine andere.  
+Ich arbeite täglich mit unterschiedlichen Frameworks wie [Angular.js](https://angularjs.org/), [Vue.js](https://vuejs.org/), [React](https://reactjs.org/) oder auch ganz ohne Frameworks mit Vanilla Javascript. Doch auch [Javascript](https://www.w3schools.com/Js/js_versions.asp#:~:text=JavaScript%20Versions.%20JavaScript.%20Versions.%20JavaScript%20was%20invented%20by,abbreviated%20to%20ES1%2C%20ES2%2C%20ES3%2C%20ES5%2C%20and%20ES6.) ist nicht gleich Javascript.  
+Es gibt ES1-ES6 sowie die neueren Versionen ECMAScript 2016 - 2018 und [TypeScript](https://www.typescriptlang.org/) verschiedene Arten von [JavaScript Modul Definitionen](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) umd, amd, commonjs. All dies ist ein Haufen zu lernen und zu berücksichtigen wenn man eine Anwendung schreiben will.
+<br>  
+Im Grunde gibt es bei der Entscheidung für das eine oder andere kein Richtig oder Falsch, sondern nur die folgenden Fragen.
+
+- Wie lange gibt es das schon?
+- Wie warscheinlich ist es das es weiter unterstützt wird?
+- Bietet es Lösungen für meine Problemstellungen?
+- Wo finde ich Informationen, wie es zu benutzen ist?
+
+Ich persönlich bevorzuge React, da man mit React im Grunde standartkonformes Javascript oder Typescript schreiben kann, ohne sich mit zuviel Framework specifischem Code auseinandersetzen zu müssen.  
+<br>
+Wir betrachten kurz die Gemeinsamkeiten vom Angular (Framework / Erstveröffentlichung:2009), React( Bibliothek/Erstveröffentlichung:2011) und Vue (Framework / Erstveröffentlichung:2014) weil ich denke diese drei Frameworks sind die relevantesten:
+
+- Eigenes Command-Line-Interface (CLI)
+- Benutzen ein virtuelles DOM (React & Vue)
+- Benutzen schnelle und zusammenstellbare view components
+- Besitzen eine Kern Bibliothek (React & Vue)
+- Bieten Möglichkeiten für SPA routing und globales Status Management ob integriert oder durch zusätzliche Bibliotheken
+- Haben eigene Developer Tools für die Installation im Browser
+
+Wer einen detailierteren Vergleich sucht der wird [hier](https://vuejs.org/v2/guide/comparison.html) fündig werden.  
+Ein [3rd Party Benchmark](https://stefankrause.net/js-frameworks-benchmark8/table.html) zum Vergleich der Renderleistungen kann man [hier](https://stefankrause.net/js-frameworks-benchmark8/table.html) finden.  
+<br/>
+
+Die Konfiguration eines neues Projektes ist immer ein großer Aufwand, daher werden wir das ganze von hinten betrachten und uns im nächsten Schritt von Create React App eine neue Anwendung generieren lassen. Es ist einfacher und schneller die Funktion von Webpack, Babel, es-lint, jest und den anderen tollen Tools auf diesem Weg zu erklären.
+
+# Create React App
+
+Wir wechseln in den Ordner Beispiele/create-react-app-example
+Hier erzeugen wir mit dem Befehl  
+`npx create-react-app my-app --template typescript`  
+eine neue React Anwendung.
+Der Output sollte das folgende oder ein ähnliches Ergebnis liefern und mit  
+"Happy hacking!" abschließen.
+
+```
+$ npx create-react-app my-app --template typescript
+Need to install the following packages:
+  create-react-app
+Ok to proceed? (y) y
+
+Creating a new React app in D:\modernwebdevelopment\Beispiele\create-react-app-example\my-app.
+
+Installing packages. This might take a couple of minutes.
+Installing react, react-dom, and react-scripts with cra-template-typescript...
+
+yarn add v1.22.5
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+info fsevents@1.2.13: The platform "win32" is incompatible with this module.
+info "fsevents@1.2.13" is an optional dependency and failed compatibility check. Excluding it from installation.
+info fsevents@2.3.2: The platform "win32" is incompatible with this module.
+info "fsevents@2.3.2" is an optional dependency and failed compatibility check. Excluding it from installation.
+[3/4] Linking dependencies...
+warning "react-scripts > @typescript-eslint/eslint-plugin > tsutils@3.20.0" has unmet peer dependency "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta".
+[4/4] Building fresh packages...
+success Saved lockfile.
+success Saved 7 new dependencies.
+info Direct dependencies
+├─ cra-template-typescript@1.1.2
+├─ react-dom@17.0.2
+├─ react-scripts@4.0.3
+└─ react@17.0.2
+info All dependencies
+├─ cra-template-typescript@1.1.2
+├─ immer@8.0.1
+├─ react-dev-utils@11.0.4
+├─ react-dom@17.0.2
+├─ react-scripts@4.0.3
+├─ react@17.0.2
+└─ scheduler@0.20.2
+Done in 47.71s.
+
+Installing template dependencies using yarnpkg...
+yarn add v1.22.5
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+info fsevents@2.3.2: The platform "win32" is incompatible with this module.
+info "fsevents@2.3.2" is an optional dependency and failed compatibility check. Excluding it from installation.
+info fsevents@1.2.13: The platform "win32" is incompatible with this module.
+info "fsevents@1.2.13" is an optional dependency and failed compatibility check. Excluding it from installation.
+[3/4] Linking dependencies...
+warning " > @testing-library/user-event@12.8.3" has unmet peer dependency "@testing-library/dom@>=7.21.4".
+[4/4] Building fresh packages...
+success Saved lockfile.
+success Saved 24 new dependencies.
+info Direct dependencies
+├─ @testing-library/jest-dom@5.11.10
+├─ @testing-library/react@11.2.6
+├─ @testing-library/user-event@12.8.3
+├─ @types/jest@26.0.22
+├─ @types/node@12.20.7
+├─ @types/react-dom@17.0.3
+├─ @types/react@17.0.3
+├─ react-dom@17.0.2
+├─ react@17.0.2
+├─ typescript@4.2.3
+└─ web-vitals@1.1.1
+info All dependencies
+├─ @testing-library/dom@7.30.3
+├─ @testing-library/jest-dom@5.11.10
+├─ @testing-library/react@11.2.6
+├─ @testing-library/user-event@12.8.3
+├─ @types/aria-query@4.2.1
+├─ @types/jest@26.0.22
+├─ @types/node@12.20.7
+├─ @types/prop-types@15.7.3
+├─ @types/react-dom@17.0.3
+├─ @types/react@17.0.3
+├─ @types/scheduler@0.16.1
+├─ @types/testing-library__jest-dom@5.9.5
+├─ css.escape@1.5.1
+├─ css@3.0.0
+├─ csstype@3.0.7
+├─ dom-accessibility-api@0.5.4
+├─ lz-string@1.4.4
+├─ min-indent@1.0.1
+├─ react-dom@17.0.2
+├─ react@17.0.2
+├─ redent@3.0.0
+├─ strip-indent@3.0.0
+├─ typescript@4.2.3
+└─ web-vitals@1.1.1
+Done in 15.56s.
+
+We detected TypeScript in your project (src\App.test.tsx) and created a tsconfig.json file for you.
+
+Your tsconfig.json has been populated with default values.
+
+Removing template package using yarnpkg...
+
+yarn remove v1.22.5
+[1/2] Removing module cra-template-typescript...
+[2/2] Regenerating lockfile and installing missing dependencies...
+info fsevents@2.3.2: The platform "win32" is incompatible with this module.
+info "fsevents@2.3.2" is an optional dependency and failed compatibility check. Excluding it from installation.
+info fsevents@1.2.13: The platform "win32" is incompatible with this module.
+info "fsevents@1.2.13" is an optional dependency and failed compatibility check. Excluding it from installation.
+warning " > @testing-library/user-event@12.8.3" has unmet peer dependency "@testing-library/dom@>=7.21.4".
+success Uninstalled packages.
+Done in 13.34s.
+
+Success! Created my-app at D:\modernwebdevelopment\Beispiele\create-react-app-example\my-app
+Inside that directory, you can run several commands:
+
+  yarn start
+    Starts the development server.
+
+  yarn build
+    Bundles the app into static files for production.
+
+  yarn test
+    Starts the test runner.
+
+  yarn eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd my-app
+  yarn start
+
+Happy hacking!
+```
+
+Im Anschluss können wir genau tun was uns gesagt wird und in den Ordner my-app wechseln und dort den Befehl yarn start ausführen. Das Ergebnis ist eine funktionierende React Anwendung die uns im Browser angezeigt wird.
 
 Author: Nico Küchler
