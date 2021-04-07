@@ -321,6 +321,40 @@ Am Schluss noch ein Hinweis zu GIT im Allgemeinen. Es ist nicht immer ersichtlic
 
 Dieser Befehl listet alle git bekannten Konfigurationen auf und zeigt aus welcher Datei die Konfigurationen jeweils bezogen werden.
 
+Wichtig für jedes neue Projekt ist es eine .gitignore file im Rootverzeichnis des Repositories anzulegen.  
+Diese Datei verhindert, dass nicht benötigte Dateien oder Ordner versehendlich in ein öffentliches Repository im Internet gelangen können.
+
+Hier eine simple .gitignore file für den Anfang:
+
+```
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+```
+
+Eine package-lock.json oder eine yarn.lock datei gehören hier allerdings nicht auf die Liste. Diese Dateien stellen sicher das die korrekten Abhängikeiten bei einer Installation bezogen werden.
+
 # Webbrowser, NODE.js, NPM und Yarn
 
 Jedes mir derzeit bekannte Javascript und Typescript Framework benötigt auf dem Entwicklungsrechner eine Installation von Node.js.
